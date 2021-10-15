@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/jbwittner/QRVcardReader#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mysql2": "^2.3.1",
+    "sequelize": "^6.7.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",

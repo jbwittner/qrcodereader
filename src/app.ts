@@ -1,24 +1,71 @@
-import express from 'express'
-var bodyParser = require("body-parser");
-import { VCardDTO } from './type'
+import express from "express";
+import bodyParser from "body-parser";
+import { VCardDTO } from "./type";
+import { Sequelize, Model, DataTypes } from "sequelize";
 
-const app = express()
-const port = 3150
+const sequelize = new Sequelize(
+  "vcardscanner",
+  "vcardscanner_user",
+  "VCardScannerPass2021",
+  {
+    host: "localhost",
+    port: 6000,
+    dialect: "mysql",
+  }
+);
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+class VCard extends Model {}
 
-app.post('/addCard', (req, res) => {
-  const data = req.body.data;
-  console.log("data")
-  console.log(data)
-  console.log("data")
-  res.send(req.body)
-})
+VCard.init(
+  {
+    version: {
+      type: DataTypes.STRING,
+    },
+    name: {
+      type: DataTypes.STRING,
+    },
+  },
+  {
+    sequelize,
+    modelName: "VCard",
+  }
+);
 
-app.use('/static', express.static('static'))
+const initDataBase = () => {
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log("Connection has been established successfully.");
+      initWebServer();
+    })
+    .catch((error) => {
+      console.error("Unable to connect to the database:", error);
+    });
+};
 
-app.listen(port, () => {
+const initWebServer = () => {
+  const app = express();
+  const port = 3150;
+
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: true }));
+
+  app.post("/addCard", (req, res) => {
+    if (req.body != undefined) {
+      const data: VCardDTO = req.body;
+      VCard.create({
+        version: data.version,
+        name: data.n,
+      }).finally(() => res.send(req.body));
+    }
+  });
+
+  app.use("/static", express.static("static"));
+
+  app.listen(port, () => {
     let toto: VCardDTO;
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+    console.log(`App listening at http://localhost:${port}`);
+  });
+};
+
+initDataBase();
