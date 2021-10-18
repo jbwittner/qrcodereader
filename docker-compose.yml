@@ -1,0 +1,35 @@
+version: '3'
+
+volumes:
+  vcardscanner_db:
+
+services:
+
+  # Database
+  mysql:
+    image: mysql:8.0.20
+    ports:
+      - '6000:3306'
+    volumes:
+      - vcardscanner_db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: VCardScannerRootPass2021
+      MYSQL_DATABASE: vcardscanner
+      MYSQL_USER: vcardscanner_user
+      MYSQL_PASSWORD: VCardScannerPass2021
+    networks:
+      - default
+
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin/phpmyadmin:5.0.2
+    ports:
+      - '6100:80'
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: VCardScannerRootPass2021
+    networks:
+      - default
