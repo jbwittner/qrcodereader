@@ -8,12 +8,12 @@ if (!fs.existsSync(dir)){
 }
 
 const addReaderData = (data: String) => {
-  const content = new Date().toISOString() + ";" + data.toString() + "\n";
+  const content = new Date().toISOString() + ";;;" + data.replace(/\r\n/g, ";;;").toString() + "\n";
   fs.writeFile("log/file.log", content, { flag: "a+" }, (err) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Add data");
+      console.log(content);
     }
     return;
   });

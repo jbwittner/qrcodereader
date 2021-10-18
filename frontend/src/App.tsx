@@ -9,10 +9,15 @@ function App() {
 
   const handleScan = (data: any) => {
     if (data) {
-      setResult(data);
-      axios.post("/dataRead", {
-        dataRead: data,
-      });
+      if(data != result){
+        setResult(data);
+        axios.post("/dataRead", {
+          dataRead: data,
+        });
+        setTimeout(() => {
+          setResult(undefined)
+        },2000)
+      }
     }
   };
 
