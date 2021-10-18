@@ -4,7 +4,7 @@
   "description": "QRCode Vcard reader",
   "main": "src/app.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf build && tsc",
     "start": "node build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,12 +19,11 @@
   },
   "homepage": "https://github.com/jbwittner/QRVcardReader#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "mysql2": "^2.3.1",
-    "sequelize": "^6.7.0"
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "rimraf": "^3.0.2"
   }
 }
