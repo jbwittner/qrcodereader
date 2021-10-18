@@ -29,7 +29,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Container>
-          <h1>QR Code reader</h1>
+          <h1>QR Code reader 0.1.0</h1>
           <QrReader
             delay={250}
             onError={handleError}
