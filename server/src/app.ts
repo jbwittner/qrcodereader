@@ -1,6 +1,23 @@
 import express from "express";
-import { VCardDTO } from "./type";
-import fs from 'fs'
+import fs from "fs";
+
+var dir = './log';
+
+if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+}
+
+const addReaderData = (data: String) => {
+  const content = new Date().toISOString() + ";" + data.toString() + "\n";
+  fs.writeFile("log/file.log", content, { flag: "a+" }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Add data");
+    }
+    return;
+  });
+};
 
 const initWebServer = () => {
   const app = express();
@@ -9,30 +26,18 @@ const initWebServer = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.post("/addCard", (req, res) => {
-    if (req.body != undefined) {
-      const data: VCardDTO = req.body;
-      console.log(data)
+  app.post("/dataRead", (req, res) => {
+    if (req.body.dataRead != undefined) {
+      addReaderData(req.body.dataRead);
     }
+    res.sendStatus(200);
   });
-
-  app.get("/testGet", (req, res) => {
-    res.json("toutou")
-  })
 
   app.use("/", express.static("static"));
 
   app.listen(port, () => {
-    let toto: VCardDTO;
     console.log(`App listening at http://localhost:${port}`);
   });
 };
 
 initWebServer();
-
-const content = 'Some content! - ' + Date.now() + "\n"
-
-fs.writeFile('file.log', content, { flag: 'a+' }, err => {
-  console.error(err)
-  return})
-

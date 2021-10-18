@@ -1,23 +1,13 @@
 {
-  "name": "qrvcardreader",
+  "name": "server",
   "version": "1.0.0",
-  "description": "QRCode Vcard reader",
+  "description": "QRCode reader",
   "main": "src/app.ts",
   "scripts": {
     "build": "rimraf build && tsc",
     "start": "node build/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jbwittner/QRVcardReader.git"
-  },
-  "author": "Jean-Baptiste WITTNER",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jbwittner/QRVcardReader/issues"
-  },
-  "homepage": "https://github.com/jbwittner/QRVcardReader#readme",
   "dependencies": {
     "express": "^4.17.1"
   },
