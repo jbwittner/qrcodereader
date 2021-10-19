@@ -28,6 +28,6 @@ COPY --from=Build_Back /usr/src/app/source/server/node_modules /usr/src/app/node
 
 RUN ls -ll
 
-EXPOSE 8080
+EXPOSE 3150
 
 CMD [ "node", "app.js" ]
