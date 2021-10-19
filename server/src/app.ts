@@ -8,7 +8,7 @@ if (!fs.existsSync(dir)){
 }
 
 const addReaderData = (data: String) => {
-  const content = new Date().toISOString() + ";;;" + data.replace(/\r\n/g, ";;;").toString() + "\n";
+  const content = new Date().toISOString() + ";;;" + unescape(escape(data.toString()).replace(/%0A/g, ";;;")) + "\n";
   fs.writeFile("log/file.log", content, { flag: "a+" }, (err) => {
     if (err) {
       console.log(err);
